@@ -7,11 +7,11 @@ require "csv_rails/version"
 Gem::Specification.new do |s|
   s.name        = "csv_rails"
   s.version     = CsvRails::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of CsvRails."
-  s.description = "TODO: Description of CsvRails."
+  s.authors     = ["yalab"]
+  s.email       = ["rudeboyjet@gmail.com"]
+  s.homepage    = "https://github.com/yalab/csv_rails"
+  s.summary     = "A rails plugin for download csv."
+  s.description = "The csv_rails gem provides a download csv file with rails."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
