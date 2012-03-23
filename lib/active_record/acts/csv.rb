@@ -22,7 +22,8 @@ module ActiveRecord
           fields = attribute_names unless fields
           fields.map{|field|
             convert_method = "#{field}_as_csv"
-            respond_to?(convert_method) ? send(convert_method) : self[field]
+            method = respond_to?(convert_method) ? convert_method : field
+            send(method)
           }
         end
       end

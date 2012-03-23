@@ -15,6 +15,10 @@ class UserTest < ActiveSupport::TestCase
     assert_equal fields.map{|f| @user[f] }, @user.to_csv_ary(fields)
   end
 
+  test "#to_csv_ary use method not a database field" do
+    assert_equal [@user.one], @user.to_csv_ary([:one])
+  end
+
   test "#updated_at_as_csv" do
     assert_equal @user.updated_at.strftime("%F %H:%M"), @user.updated_at_as_csv
   end
