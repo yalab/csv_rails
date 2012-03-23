@@ -12,7 +12,10 @@ module ActiveRecord
         def to_csv(opts={})
           fields = opts.delete(:fields) || attribute_names
           CSV.generate do |csv|
-            csv << fields.map{|f| human_attribute_name(f) } unless opts[:without_header]
+            csv << fields.map{|f|
+              name = human_attribute_name(f)
+              opts[:encoding] ? name.encode(opts[:encoding]) : name
+            } unless opts[:without_header]
             all.each{|row| csv << row.to_csv_ary(fields) }
           end
         end

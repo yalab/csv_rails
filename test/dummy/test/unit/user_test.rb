@@ -61,4 +61,11 @@ class UserTest < ActiveSupport::TestCase
     User.create(:name => 'atsushi', :age => 45, :secret => 'none')
     assert_equal 1, CSV.parse(User.where("id > 1").to_csv(:without_header => true)).length
   end
+
+  test ".to_csv accept encoding" do
+    I18n.locale = :ja
+    assert_equal "名前".encode('SJIS'), CSV.parse(User.to_csv(:fields => [:name], :encoding => 'SJIS')).first.first
+    I18n.locale = :en
+  end
+
 end
