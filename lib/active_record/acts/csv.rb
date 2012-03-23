@@ -9,15 +9,17 @@ module ActiveRecord
 
       module ClassMethods
         def to_csv
+          fields = attribute_names
           CSV.generate do |csv|
-            all.each{|row| csv << row.to_a }
+            csv << fields
+            all.each{|row| csv << row.to_a(fields) }
           end
         end
       end
 
       module InstanceMethods
-        def to_a
-          self.class.attribute_names.map{|attribute| self[attribute] }
+        def to_a(fields)
+          fields.map{|attribute| self[attribute] }
         end
       end
     end
