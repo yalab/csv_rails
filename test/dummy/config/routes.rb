@@ -1,4 +1,6 @@
 Dummy::Application.routes.draw do
+  resource :users, :only => [:index]
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
