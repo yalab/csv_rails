@@ -5,14 +5,14 @@ class UserTest < ActiveSupport::TestCase
     @user = User.create(:name => 'yalab', :age => '29', :secret => 'password')
   end
 
-  test "#to_a without params" do
-    assert_equal @user.attributes.length, @user.to_a.length
-    assert_equal @user.attributes.values, @user.to_a
+  test "#to_csv_ary without params" do
+    assert_equal @user.attributes.length, @user.to_csv_ary.length
+    assert_equal @user.attributes.values, @user.to_csv_ary
   end
 
-  test "#to_a with field params" do
+  test "#to_csv_ary with field params" do
     fields = [:name, :age]
-    assert_equal fields.map{|f| @user[f] }, @user.to_a(fields)
+    assert_equal fields.map{|f| @user[f] }, @user.to_csv_ary(fields)
   end
 
   test ".to_csv without params" do

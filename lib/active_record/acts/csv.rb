@@ -12,13 +12,13 @@ module ActiveRecord
           fields = attribute_names
           CSV.generate do |csv|
             csv << fields
-            all.each{|row| csv << row.to_a(fields) }
+            all.each{|row| csv << row.to_csv_ary(fields) }
           end
         end
       end
 
       module InstanceMethods
-        def to_a(fields=nil)
+        def to_csv_ary(fields=nil)
           fields = attribute_names unless fields
           fields.map{|attribute| self[attribute] }
         end
