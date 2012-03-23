@@ -50,4 +50,9 @@ class UserTest < ActiveSupport::TestCase
     header = CSV.parse(User.to_csv(:fields => fields)).first
     assert_equal fields.map{|f| User.human_attribute_name(f) }, header
   end
+
+  test ".to_csv with scoped" do
+    User.create(:name => 'atsushi', :age => 45, :secret => 'none')
+    assert_equal 1, CSV.parse(User.where("id > 1").to_csv(:without_header => true)).length
+  end
 end

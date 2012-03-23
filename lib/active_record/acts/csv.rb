@@ -4,6 +4,7 @@ module ActiveRecord
     module Csv
       def self.included(base)
         base.extend ClassMethods
+        ::ActiveRecord::Relation.send(:include, ClassMethods)
         base.send(:include, InstanceMethods)
       end
 
