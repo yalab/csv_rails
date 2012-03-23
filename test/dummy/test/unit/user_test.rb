@@ -32,4 +32,10 @@ class UserTest < ActiveSupport::TestCase
       assert_equal @user[field].to_s, line[index]
     end
   end
+
+  test ".to_csv can use fields option" do
+    fields = [:id, :name]
+    row = CSV.parse(User.to_csv(:fields => fields)).last
+    assert_equal fields.map{|f| @user[f].to_s }, row
+  end
 end

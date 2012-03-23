@@ -8,8 +8,8 @@ module ActiveRecord
       end
 
       module ClassMethods
-        def to_csv
-          fields = attribute_names
+        def to_csv(opts={})
+          fields = opts[:fields] || attribute_names
           CSV.generate do |csv|
             csv << fields
             all.each{|row| csv << row.to_csv_ary(fields) }
