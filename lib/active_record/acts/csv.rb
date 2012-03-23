@@ -11,7 +11,7 @@ module ActiveRecord
         def to_csv(opts={})
           fields = opts[:fields] || attribute_names
           CSV.generate do |csv|
-            csv << fields
+            csv << fields unless opts[:without_header]
             all.each{|row| csv << row.to_csv_ary(fields) }
           end
         end

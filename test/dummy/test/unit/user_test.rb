@@ -38,4 +38,10 @@ class UserTest < ActiveSupport::TestCase
     row = CSV.parse(User.to_csv(:fields => fields)).last
     assert_equal fields.map{|f| @user[f].to_s }, row
   end
+
+  test ".to_csv varnish header" do
+    fields = [:id, :name]
+    row = CSV.parse(User.to_csv(:fields => fields, :without_header => true)).first
+    assert_equal fields.map{|f| @user[f].to_s }, row
+  end
 end
