@@ -28,7 +28,7 @@ module ActiveRecord
             convert_method = "#{field}_as_csv"
             method = respond_to?(convert_method) ? convert_method : field
             value = send(method)
-            opts[:encoding] ? value.encode(opts[:encoding]) : value
+            opts[:encoding] ? value.to_s.encode(opts[:encoding]) : value
           }
         end
       end
