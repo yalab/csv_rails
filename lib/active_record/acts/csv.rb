@@ -20,7 +20,7 @@ module ActiveRecord
       module InstanceMethods
         def to_csv_ary(fields=nil)
           fields = attribute_names unless fields
-          fields.map{|attribute| self[attribute] }
+          fields.map{|field| self[field] }
         end
       end
     end
