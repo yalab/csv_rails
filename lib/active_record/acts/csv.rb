@@ -10,7 +10,7 @@ module ActiveRecord
 
       module ClassMethods
         def to_csv(opts={})
-          fields = opts[:fields] || attribute_names
+          fields = opts.delete(:fields) || attribute_names
           CSV.generate do |csv|
             csv << fields.map{|f| human_attribute_name(f) } unless opts[:without_header]
             all.each{|row| csv << row.to_csv_ary(fields) }
