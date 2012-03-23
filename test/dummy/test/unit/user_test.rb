@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'test_helper'
 require 'csv'
 class UserTest < ActiveSupport::TestCase
@@ -17,6 +18,11 @@ class UserTest < ActiveSupport::TestCase
 
   test "#to_csv_ary use method not a database field" do
     assert_equal [@user.one], @user.to_csv_ary([:one])
+  end
+
+  test "#to_csv_ary accept encoding" do
+    name = 'よしだ'
+    assert_equal name.encode('SJIS'), User.create(:name => name).to_csv_ary([:name], :encoding => 'SJIS').first
   end
 
   test "#updated_at_as_csv" do

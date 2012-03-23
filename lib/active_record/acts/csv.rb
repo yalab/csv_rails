@@ -19,12 +19,13 @@ module ActiveRecord
       end
 
       module InstanceMethods
-        def to_csv_ary(fields=nil)
+        def to_csv_ary(fields=nil, opts={})
           fields = attribute_names unless fields
           fields.map{|field|
             convert_method = "#{field}_as_csv"
             method = respond_to?(convert_method) ? convert_method : field
-            send(method)
+            value = send(method)
+            opts[:encoding] ? value.encode(opts[:encoding]) : value
           }
         end
       end
