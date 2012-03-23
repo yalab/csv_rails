@@ -18,7 +18,8 @@ module ActiveRecord
       end
 
       module InstanceMethods
-        def to_a(fields)
+        def to_a(fields=nil)
+          fields = attribute_names unless fields
           fields.map{|attribute| self[attribute] }
         end
       end
