@@ -25,7 +25,7 @@ class UserTest < ActiveSupport::TestCase
 
   test ".to_csv without params" do
     csv = CSV.parse(User.to_csv)
-    header = csv.first
+    header = csv.first.map{|f| f.downcase.tr(' ', '_') }
     header.delete("updated_at")
     line = csv.last
     header.each.with_index do |field, index|
@@ -43,5 +43,11 @@ class UserTest < ActiveSupport::TestCase
     fields = [:id, :name]
     row = CSV.parse(User.to_csv(:fields => fields, :without_header => true)).first
     assert_equal fields.map{|f| @user[f].to_s }, row
+  end
+
+  test ".to_csv header use human_attribute_name" do
+    fields = [:id, :name, :one]
+    header = CSV.parse(User.to_csv(:fields => fields)).first
+    assert_equal fields.map{|f| User.human_attribute_name(f) }, header
   end
 end
