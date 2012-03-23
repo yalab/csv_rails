@@ -20,7 +20,10 @@ module ActiveRecord
       module InstanceMethods
         def to_csv_ary(fields=nil)
           fields = attribute_names unless fields
-          fields.map{|field| self[field] }
+          fields.map{|field|
+            convert_method = "#{field}_as_csv"
+            respond_to?(convert_method) ? send(convert_method) : self[field]
+          }
         end
       end
     end
