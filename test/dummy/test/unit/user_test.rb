@@ -15,6 +15,10 @@ class UserTest < ActiveSupport::TestCase
     assert_equal fields.map{|f| @user[f] }, @user.to_csv_ary(fields)
   end
 
+  test "#updated_at_as_csv" do
+    assert_equal @user.updated_at.strftime("%F %H:%M"), @user.updated_at_as_csv
+  end
+
   test ".to_csv without params" do
     csv = CSV.parse(User.to_csv)
     header = csv.first
