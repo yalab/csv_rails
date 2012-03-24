@@ -1,3 +1,37 @@
 = CsvRails
 
-This project rocks and uses MIT-LICENSE.
+CsvRails provides a simple way of download csv in Rails 3.
+
+== Install
+
+To use CsvRails simply add the line
+
+    gem 'csv_rails'
+
+to your Gemfile and then run
+
+    bundle install
+
+== Example
+    class UsersController < ApplicationController
+      def index
+        @users = User.all
+
+        respond_to do |format|
+          format.html { @users = @users.all }
+          format.json { render json: @users }
+          format.csv{ render csv: @users, :fields => [:id, :name, :age], :encoding => 'SJIS' }
+        end
+      end
+
+== Usage
+
+If you want formatted created_at in the csv you should write like this
+
+    class User < ActiveRecord::Base
+      def created_at_as_csv
+        created_at.strftime("%F %H:%M")
+      end
+    end
+
+Copyright (c) 2012 yalab, released under the MIT license
