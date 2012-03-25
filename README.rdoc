@@ -1,6 +1,6 @@
 = CsvRails
 
-CsvRails provides a simple way of download csv in Rails 3(Now only 3.2.x).
+CsvRails provides a simple way of download csv in Rails 3.
 
 == Install
 
@@ -36,10 +36,4 @@ If you want formatted created_at in the csv you should write like this
       end
     end
     
-
-== TODO
-
-- Support multi versions of rails.
-
-
 Copyright (c) 2012 yalab, released under the MIT license
