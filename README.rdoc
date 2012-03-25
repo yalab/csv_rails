@@ -13,6 +13,8 @@ to your Gemfile and then run
     bundle install
 
 == Example
+
+
     class UsersController < ApplicationController
       def index
         @users = User.all
@@ -24,6 +26,7 @@ to your Gemfile and then run
         end
       end
 
+
 == Usage
 
 If you want formatted created_at in the csv you should write like this
@@ -33,5 +36,5 @@ If you want formatted created_at in the csv you should write like this
         created_at.strftime("%F %H:%M")
       end
     end
-
+    
 Copyright (c) 2012 yalab, released under the MIT license
