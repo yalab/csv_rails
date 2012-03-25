@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
-  age: 1
-  secret: MyString
+  name: よしだあつし
+  age: 4
+  secret: <%= Time.now.to_f %>
 
 two:
   name: MyString
