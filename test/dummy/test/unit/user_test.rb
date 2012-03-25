@@ -48,7 +48,7 @@ class UserTest < ActiveSupport::TestCase
   test ".to_csv varnish header" do
     fields = [:id, :name]
     row = CSV.parse(User.to_csv(:fields => fields, :without_header => true)).first
-    assert_equal fields.map{|f| @user[f].to_s }, row
+    assert_not_equal fields.map{|f| User.human_attribute_name(f) }, row
   end
 
   test ".to_csv header use human_attribute_name" do
@@ -59,7 +59,7 @@ class UserTest < ActiveSupport::TestCase
 
   test ".to_csv with scoped" do
     User.create(:name => 'atsushi', :age => 45, :secret => 'none')
-    assert_equal 1, CSV.parse(User.where("id > 1").to_csv(:without_header => true)).length
+    assert_equal 1, CSV.parse(User.where("age > 39").to_csv(:without_header => true)).length
   end
 
   test ".to_csv accept encoding" do
