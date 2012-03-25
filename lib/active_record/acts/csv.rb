@@ -10,7 +10,15 @@ module ActiveRecord
 
       module ClassMethods
         def to_csv(opts={})
-          fields = opts.delete(:fields) || attribute_names
+          fields = if opts[:fields]
+                     opts.delete(:fields)
+                   elsif respond_to?(:attribute_names)
+                     attribute_names
+                   elsif self.is_a?(ActiveRecord::Relation)
+                     @klass.new.attribute_names
+                   else
+                     new.attribute_names
+                   end
           CSV.generate do |csv|
             csv << fields.map{|f|
               name = human_attribute_name(f)
