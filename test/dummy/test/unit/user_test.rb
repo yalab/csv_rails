@@ -20,11 +20,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal [@user.one], @user.to_csv_ary([:one])
   end
 
-  test "#to_csv_ary accept encoding" do
-    name = 'よしだ'
-    assert_equal name.encode('SJIS'), User.create(:name => name).to_csv_ary([:name], :encoding => 'SJIS').first
-  end
-
   test "#updated_at_as_csv" do
     assert_equal @user.updated_at.strftime("%F %H:%M"), @user.updated_at_as_csv
   end
