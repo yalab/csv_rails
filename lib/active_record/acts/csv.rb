@@ -19,13 +19,11 @@ module ActiveRecord
                    else
                      new.attribute_names
                    end
-          CSV.generate do |csv|
-            csv << fields.map{|f|
-              name = human_attribute_name(f)
-              opts[:encoding] ? name.encode(opts[:encoding]) : name
-            } unless opts[:without_header]
-            all.each{|row| csv << row.to_csv_ary(fields) }
+          csv = CSV.generate do |_csv|
+            _csv << fields.map{|f| human_attribute_name(f) } unless opts[:without_header]
+            all.each{|row| _csv << row.to_csv_ary(fields) }
           end
+          opts[:encoding] ? csv.encode(opts[:encoding]) : csv
         end
       end
 
