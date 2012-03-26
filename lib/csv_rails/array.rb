@@ -11,18 +11,19 @@ module CsvRails
         return "" if length < 1
         first = self.first
         fields = opts.delete(:fields) || first.class.attribute_names
-        CSV.generate do |csv|
+        csv = CSV.generate do |_csv|
           unless opts[:without_header]
-            csv << if first.class.respond_to?(:human_attribute_name)
+            _csv << if first.class.respond_to?(:human_attribute_name)
                      fields.map{|f| first.class.human_attribute_name(f) }
                    else
                      fields
                    end
           end
           each do |element|
-             csv << element.to_csv_ary(fields, opts)
+             _csv << element.to_csv_ary(fields, opts)
           end
         end
+        opts[:encoding] ? csv.encode(opts[:encoding]) : csv
       end
     end
   end
