@@ -8,19 +8,18 @@ module CsvRails
 
     module InstanceMethods
       def to_csv(opts={})
-        return "" if length < 1
-        first = self.first
-        fields = opts.delete(:fields) || first.class.attribute_names
+        fields = opts[:fields]
+        header = if opts[:header]
+                   opts.delete(:header)
+                 elsif first.class.respond_to?(:human_attribute_name)
+                   fields.map{|h| first.class.human_attribute_name(h) }
+                 else
+                   fields
+                 end
         csv = CSV.generate do |_csv|
-          unless opts[:without_header]
-            _csv << if first.class.respond_to?(:human_attribute_name)
-                     fields.map{|f| first.class.human_attribute_name(f) }
-                   else
-                     fields
-                   end
-          end
+          _csv << header unless opts[:without_header]
           each do |element|
-             _csv << element.to_csv_ary(fields, opts)
+            _csv << element.to_csv_ary(fields, opts)
           end
         end
         opts[:encoding] ? csv.encode(opts[:encoding]) : csv

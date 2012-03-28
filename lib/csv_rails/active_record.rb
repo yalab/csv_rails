@@ -18,7 +18,8 @@ module CsvRails
                  else
                    new.attribute_names
                  end
-        all.to_csv(opts.update(:fields => fields))
+        header = fields.map{|f| human_attribute_name(f) }
+        all.to_csv(opts.update(:fields => fields, :header => header))
       end
     end
 
