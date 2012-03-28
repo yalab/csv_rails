@@ -11,8 +11,8 @@ module CsvRails
         fields = opts[:fields]
         header = if opts[:header]
                    opts.delete(:header)
-                 elsif first.class.respond_to?(:human_attribute_name)
-                   fields.map{|h| first.class.human_attribute_name(h) }
+                 elsif (klass = first.class).respond_to?(:csv_header)
+                   klass.csv_header(fields)
                  else
                    fields
                  end

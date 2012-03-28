@@ -21,6 +21,10 @@ module CsvRails
         header = fields.map{|f| human_attribute_name(f) }
         all.to_csv(opts.update(:fields => fields, :header => header))
       end
+
+      def csv_header(names)
+        names.map{|n| human_attribute_name(n) }
+      end
     end
 
     module InstanceMethods
