@@ -68,9 +68,15 @@ If you do not use :header option, header is using :fields and I18n transfer.
             name: 名前
             age: 年齢
             ok: OK
+          # rails3
             groups:
               first:
                 <<: *groupmodel
+          # edge rails
+          user/groups:
+            first:
+              <<: *groupmodel
+
 
     # app/controllers/user_controller.rb
     def index

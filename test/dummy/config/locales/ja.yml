@@ -7,6 +7,11 @@ ja:
         id: ID
         name: 名前
         age: 年齢
+      # previous version of rails 3.2.2
         groups:
           first:
             <<: *groupmodel
+      # rails 3.2.3 or higher
+      user/groups:
+        first:
+          <<: *groupmodel
