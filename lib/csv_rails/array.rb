@@ -7,6 +7,11 @@ module CsvRails
     end
 
     module InstanceMethods
+      # ==== Options
+      # * <tt>:fields</tt> - target field names
+      # * <tt>:header</tt> - header
+      # * <tt>:without_header</tt> - total_count
+      # * <tt>:encoding</tt> - encoding
       def to_csv(opts={})
         fields = opts[:fields]
         header = if opts[:header]
