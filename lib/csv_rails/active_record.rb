@@ -32,6 +32,7 @@ module CsvRails
         fields = attribute_names unless fields
         fields.map{|field|
           field.to_s.split(".").inject(self){|object, f|
+            next unless object
             convert_method = "#{f}_as_csv"
             method = respond_to?(convert_method) ? convert_method : f
             object.send(f)

@@ -25,6 +25,11 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
     assert_equal [@user.name, @group.name], @user.memberships.first.to_csv_ary([:"user.name", :"group.name"])
   end
 
+  test "#to_csv_ary ignore empty association" do
+    name = 'noman'
+    assert_equal [name, nil], User.new(:name => 'noman').to_csv_ary([:name, :"groups.first.name"])
+  end
+
   test "#updated_at_as_csv" do
     assert_equal @user.updated_at.strftime("%F %H:%M"), @user.updated_at_as_csv
   end
