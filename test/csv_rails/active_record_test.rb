@@ -67,4 +67,20 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
     assert_equal "名前".encode('SJIS'), CSV.parse(User.to_csv(:fields => [:name], :encoding => 'SJIS')).first.first
     I18n.locale = :en
   end
+
+  test ".csv_header with association" do
+    I18n.locale = :ja
+    assert_equal [User.human_attribute_name(:name), Group.human_attribute_name(:name)], User.csv_header([:name, :"groups.first.name"])
+    I18n.locale = :en
+  end
+
+  test ".to_csv with association" do
+    I18n.locale = :ja
+    csv =<<-EOS.gsub(/^\s+/, '')
+      #{User.human_attribute_name(:name)},#{Group.human_attribute_name(:name)}
+      #{@user.name},#{@group.name}
+    EOS
+    assert_equal csv, User.includes(:groups).to_csv(:fields => [:name, :"groups.first.name"])
+    I18n.locale = :en
+  end
 end

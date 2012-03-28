@@ -1,7 +1,12 @@
 ja:
   activerecord:
     attributes:
+      group: &groupmodel
+        name: グループ名
       user:
         id: ID
         name: 名前
         age: 年齢
+        groups:
+          first:
+            <<: *groupmodel
