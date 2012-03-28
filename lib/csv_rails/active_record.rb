@@ -18,11 +18,7 @@ module CsvRails
                  else
                    new.attribute_names
                  end
-        csv = CSV.generate do |_csv|
-          _csv << fields.map{|f| human_attribute_name(f) } unless opts[:without_header]
-          all.each{|row| _csv << row.to_csv_ary(fields) }
-        end
-        opts[:encoding] ? csv.encode(opts[:encoding]) : csv
+        all.to_csv(opts.update(:fields => fields))
       end
     end
 
