@@ -1,6 +1,7 @@
-require File.expand_path('../active_record/acts/csv', __FILE__)
-require File.expand_path('../csv_rails/array', __FILE__)
-ActiveRecord::Base.send(:include, ActiveRecord::Acts::Csv)
+require 'csv_rails/array'
+require 'csv_rails/active_record'
+
+ActiveRecord::Base.send(:include, CsvRails::ActiveRecord)
 Array.send(:include, CsvRails::Array)
 
 ActionController::Renderers.add :csv do |obj, options|
