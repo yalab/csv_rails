@@ -31,9 +31,11 @@ module CsvRails
       def to_csv_ary(fields=nil, opts={})
         fields = attribute_names unless fields
         fields.map{|field|
-          convert_method = "#{field}_as_csv"
-          method = respond_to?(convert_method) ? convert_method : field
-          send(method)
+          field.to_s.split(".").inject(self){|object, f|
+            convert_method = "#{f}_as_csv"
+            method = respond_to?(convert_method) ? convert_method : f
+            object.send(f)
+          }
         }
       end
     end

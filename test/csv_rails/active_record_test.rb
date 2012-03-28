@@ -3,6 +3,8 @@ require 'test_helper'
 class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
   setup do
     @user = User.create(:name => 'yalab', :age => '29', :secret => 'password')
+    @group = Group.create(:name => 'ruby')
+    @user.groups << @group
   end
 
   test "#to_csv_ary without params" do
@@ -17,6 +19,10 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
 
   test "#to_csv_ary use method not a database field" do
     assert_equal [@user.one], @user.to_csv_ary([:one])
+  end
+
+  test "#to_csv_ary can use association" do
+    assert_equal [@user.name, @group.name], @user.memberships.first.to_csv_ary([:"user.name", :"group.name"])
   end
 
   test "#updated_at_as_csv" do
