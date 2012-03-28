@@ -61,10 +61,4 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
     assert_equal "名前".encode('SJIS'), CSV.parse(User.to_csv(:fields => [:name], :encoding => 'SJIS')).first.first
     I18n.locale = :en
   end
-
-  test "Array.to_csv accept encoding" do
-    I18n.locale = :ja
-    assert_equal "名前".encode('SJIS'), CSV.parse(User.all.to_csv(:fields => [:name], :encoding => 'SJIS')).first.first
-    I18n.locale = :en
-  end
 end
