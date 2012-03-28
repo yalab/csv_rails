@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User
+    @users = User.includes(:groups)
     respond_to do |format|
       format.html
       format.csv { render csv: @users, fields: [:id, :name, :age, :"groups.first.name"], without_header: true }
@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def sjis
-    @users = User.all
+    @users = User.includes(:groups).all
     respond_to do |format|
       format.html
       format.csv { render csv: @users, fields: [:id, :name, :age, :"groups.first.name"], encoding: 'SJIS' }

@@ -9,3 +9,10 @@ two:
   name: yalab
   age: 8
   secret: "I'm a neet."
+
+<% 1000.times do |n| %>
+<%= "#{n}:" %>
+  name: <%= n %>
+  age: <%= n %>
+  secret: <%= n %>
+<% end %>
