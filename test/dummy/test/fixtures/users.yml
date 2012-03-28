@@ -2,10 +2,10 @@
 
 one:
   name: よしだあつし
-  age: 4
-  secret: <%= Time.now.to_f %>
+  age: 29
+  secret: "I like curry and rice."
 
 two:
-  name: MyString
-  age: 1
-  secret: MyString
+  name: yalab
+  age: 8
+  secret: "I'm a neet."

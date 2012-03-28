@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     @users = User
     respond_to do |format|
       format.html
-      format.csv { render csv: @users, fields: [:id, :name, :age] }
+      format.csv { render csv: @users, fields: [:id, :name, :age, :"groups.first.name"], without_header: true }
     end
   end
 
@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @users = User.all
     respond_to do |format|
       format.html
-      format.csv { render csv: @users, fields: [:id, :name, :age], :encoding => 'SJIS'}
+      format.csv { render csv: @users, fields: [:id, :name, :age, :"groups.first.name"], encoding: 'SJIS' }
     end
   end
 end
