@@ -88,4 +88,8 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
     assert_equal csv, User.includes(:groups).to_csv(:fields => [:name, :"groups.first.name"])
     I18n.locale = :en
   end
+
+  test ".to_csv with association using as_csv" do
+    assert_equal @group.created_at_as_csv, User.includes(:groups).to_csv(:fields => [:"groups.first.created_at"], :without_header => true).chomp
+  end
 end
