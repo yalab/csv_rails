@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    csv_rails (0.5.0)
+    csv_rails (0.5.1)
       rails (>= 3.0.0)
 
 GEM
