@@ -11,4 +11,8 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
     name = "名前"
     assert_equal name.encode('SJIS'), [].to_csv(:header => [name], :encoding => 'SJIS').chomp
   end
+
+  test ".to_csv only it includes ActiveRecord instance" do
+    [User.create(:name => 'satomicchy')].to_csv
+  end
 end

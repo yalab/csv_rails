@@ -9,21 +9,23 @@ module CsvRails
 
     module ClassMethods
       def to_csv(opts={})
-        fields = if opts[:fields]
-                   opts.delete(:fields)
-                 elsif respond_to?(:attribute_names)
-                   attribute_names
-                 elsif self.is_a?(::ActiveRecord::Relation)
-                   @klass.new.attribute_names
-                 else
-                   new.attribute_names
-                 end
+        fields = opts[:fields] || csv_fields
         header = fields.map{|f| human_attribute_name(f) }
         all.to_csv(opts.update(:fields => fields, :header => header))
       end
 
+      def csv_fields
+        if respond_to?(:attribute_names)
+          attribute_names
+        elsif self.is_a?(::ActiveRecord::Relation)
+          @klass.new.attribute_names
+        else
+          new.attribute_names
+        end
+      end
+
       def csv_header(names)
-        names.map{|n| human_attribute_name(n) }
+        (names || csv_fields).map{|n| human_attribute_name(n) }
       end
     end
 
