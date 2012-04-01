@@ -5,7 +5,8 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
   setup do
     I18n.locale = :ja
     @csv_rails_scope = {name: "名前", age: "年齢"}
-    I18n.backend.store_translations(:ja, :csv_rails => @csv_rails_scope)
+    @human_scope = {sex: '性別'}
+    I18n.backend.store_translations(:ja, :csv_rails => @csv_rails_scope, :human => @human_scope)
   end
 
   teardown do
@@ -17,9 +18,15 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
     assert_equal  header.join(','), [].to_csv(:header => header).chomp
   end
 
-  test ".to_csv using I18n csv_rails scope" do
-    fields = @csv_rails_scope.keys
-    assert_equal @csv_rails_scope.values.join(','), [].to_csv(:fields => fields).chomp
+  test ".to_csv using I18n csv_rails scope and accept i18n_scope option" do
+    translations = @csv_rails_scope.merge(@human_scope)
+    fields = translations.keys
+    assert_equal translations.values.join(','), [].to_csv(:fields => fields, :i18n_scope => :human).chomp
+  end
+
+  test ".to_csv not stored i18n" do
+    fields = [:sum, :max]
+    assert_equal fields.join(','), [].to_csv(:fields => fields).chomp
   end
 
   test ".to_csv accept encoding" do
