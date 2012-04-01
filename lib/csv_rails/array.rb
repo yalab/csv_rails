@@ -19,7 +19,7 @@ module CsvRails
                  elsif (klass = first.class).respond_to?(:csv_header)
                    klass.csv_header(fields)
                  else
-                   fields
+                   fields.map{|f| I18n.t("csv_rails.#{f}", :default => f.to_s) }
                  end
         csv = CSV.generate do |_csv|
           _csv << header unless opts[:without_header]
