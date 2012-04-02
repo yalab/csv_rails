@@ -39,4 +39,8 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
       [User.create(:name => 'satomicchy')].to_csv
     end
   end
+
+  test ".to_csv using empty array" do
+    assert_equal "", [].to_csv
+  end
 end

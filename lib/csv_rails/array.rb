@@ -24,10 +24,10 @@ module CsvRails
                    fields.map{|f|
                      defaults = scopes.map{|s| "#{s}.#{f}".to_sym }.push(f.to_s)
                      I18n.t(defaults.shift, :default => defaults)
-                   }
+                   } if fields
                  end
         csv = CSV.generate do |_csv|
-          _csv << header unless opts[:without_header]
+          _csv << header if header && !opts[:without_header]
           each do |element|
             _csv << element.to_csv_ary(fields, opts)
           end
