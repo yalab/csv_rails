@@ -89,6 +89,13 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
     I18n.locale = :en
   end
 
+  test ".to_csv with i18n option" do
+    I18n.locale = :ja
+    translated = [:id, :name].map{|f| I18n.t("csv_rails.#{f}") }.join(',')
+    assert_match /^#{translated}/, User.where('id < 1').to_csv(:i18n_scope => 'csv_rails')
+    I18n.locale = :en
+  end
+
   test ".to_csv with association using as_csv" do
     assert_equal @group.created_at_as_csv, User.includes(:groups).to_csv(:fields => [:"groups.first.created_at"], :without_header => true).chomp
   end
