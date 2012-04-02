@@ -35,6 +35,8 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
   end
 
   test ".to_csv only it includes ActiveRecord instance" do
-    [User.create(:name => 'satomicchy')].to_csv
+    assert_nothing_raised do
+      [User.create(:name => 'satomicchy')].to_csv
+    end
   end
 end

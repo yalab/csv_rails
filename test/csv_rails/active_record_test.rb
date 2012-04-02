@@ -73,12 +73,6 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
     I18n.locale = :en
   end
 
-  test ".csv_header with association" do
-    I18n.locale = :ja
-    assert_equal [User.human_attribute_name(:name), Group.human_attribute_name(:name)], User.csv_header([:name, :"groups.first.name"])
-    I18n.locale = :en
-  end
-
   test ".to_csv with association" do
     I18n.locale = :ja
     csv =<<-EOS.gsub(/^\s+/, '')

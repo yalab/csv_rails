@@ -16,8 +16,8 @@ module CsvRails
         fields = opts[:fields]
         header = if opts[:header]
                    opts.delete(:header)
-                 elsif (klass = first.class).respond_to?(:csv_header)
-                   klass.csv_header(fields)
+                 elsif (klass = first.class).respond_to?(:csv_fields)
+                   klass.csv_fields
                  else
                    scopes = ['csv_rails']
                    scopes << opts[:i18n_scope] if opts[:i18n_scope]

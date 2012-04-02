@@ -30,10 +30,6 @@ module CsvRails
           new.attribute_names
         end
       end
-
-      def csv_header(names)
-        (names || csv_fields).map{|n| human_attribute_name(n) }
-      end
     end
 
     module InstanceMethods
