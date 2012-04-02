@@ -12,6 +12,7 @@ module CsvRails
       # * <tt>:header</tt> - header
       # * <tt>:without_header</tt> - total_count
       # * <tt>:encoding</tt> - encoding
+      # * <tt>:i18n_scope</tt> - i18n scope
       def to_csv(opts={})
         fields = opts[:fields]
         header = if opts[:header]

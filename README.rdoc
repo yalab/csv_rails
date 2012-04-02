@@ -86,4 +86,12 @@ If you do not use :header option, header is using :fields and I18n transfer.
       end
     end
 
+You also use i18n_scope option
+    # config/locales/ja.yml
+    ja:
+      csv:
+        name: なまえ
+
+    User.where("id < 1").all.to_csv(:i18n_scope => :csv) #=> "なまえ\n"
+
 Copyright (c) 2012 yalab, released under the MIT license
