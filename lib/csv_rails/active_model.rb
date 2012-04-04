@@ -1,10 +1,6 @@
 require 'csv'
 module CsvRails
   module ActiveModel
-    def self.included(base)
-      base.extend ClassMethods
-    end
-
     module ClassMethods
       def to_csv(opts={})
         fields = opts[:fields] || csv_fields
@@ -30,16 +26,18 @@ module CsvRails
       end
     end
 
-    def to_csv_ary(fields=nil, opts={})
-      fields = attribute_names unless fields
-      fields.map{|field|
-        field.to_s.split(".").inject(self){|object, f|
-          next unless object
-          convert_method = "#{f}_as_csv"
-          method = object.respond_to?(convert_method) ? convert_method : f
-          object.send(method)
+    module InstanceMethods
+      def to_csv_ary(fields=nil, opts={})
+        fields = attribute_names unless fields
+        fields.map{|field|
+          field.to_s.split(".").inject(self){|object, f|
+            next unless object
+            convert_method = "#{f}_as_csv"
+            method = object.respond_to?(convert_method) ? convert_method : f
+            object.send(method)
+          }
         }
-      }
+      end
     end
   end
 end
