@@ -36,7 +36,7 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
 
   test ".to_csv only it includes ActiveRecord instance" do
     assert_nothing_raised do
-      [User.create(:name => 'satomicchy')].to_csv
+          assert_match /^#{I18n.t("csv_rails.id")},#{User.human_attribute_name(:name)}/, [User.create(:name => 'satomicchy')].to_csv(:i18n_scope => 'csv_rails')
     end
   end
 

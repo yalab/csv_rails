@@ -1,7 +1,6 @@
 ja:
   csv_rails:
     id: あいでぃー
-    name: なまえ
   activerecord:
     attributes:
       group: &groupmodel

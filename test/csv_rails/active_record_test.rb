@@ -85,8 +85,8 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
 
   test ".to_csv with i18n option" do
     I18n.locale = :ja
-    translated = [:id, :name].map{|f| I18n.t("csv_rails.#{f}") }.join(',')
-    assert_match /^#{translated}/, User.where('id < 1').to_csv(:i18n_scope => 'csv_rails')
+    translated = [:id].map{|f| I18n.t("csv_rails.#{f}") }.join(',')
+    assert_match /^#{translated},#{User.human_attribute_name(:name)}/, User.where('id < 1').to_csv(:i18n_scope => 'csv_rails')
     I18n.locale = :en
   end
 
