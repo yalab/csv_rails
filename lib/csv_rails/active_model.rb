@@ -1,9 +1,8 @@
 require 'csv'
 module CsvRails
-  module ActiveRecord
+  module ActiveModel
     def self.included(base)
       base.extend ClassMethods
-      ::ActiveRecord::Relation.send(:include, ClassMethods)
       base.send(:include, InstanceMethods)
     end
 

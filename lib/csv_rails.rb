@@ -1,8 +1,12 @@
 require 'csv_rails/array'
-require 'csv_rails/active_record'
+require 'csv_rails/active_model'
 
-ActiveRecord::Base.send(:include, CsvRails::ActiveRecord)
 Array.send(:include, CsvRails::Array)
+
+if defined?(ActiveRecord)
+  ActiveRecord::Base.send(:include, CsvRails::ActiveModel)
+  ActiveRecord::Relation.send(:include, CsvRails::ActiveModel::ClassMethods)
+end
 
 ActionController::Renderers.add :csv do |obj, options|
   filename = options[:filename] || File.basename(request.path)
