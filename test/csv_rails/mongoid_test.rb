@@ -7,6 +7,6 @@ class CsvRails::MongoidTest < ActiveSupport::TestCase
   end
 
   test ".to_csv" do
-    assert_equal "title,body\ntitle,foobar\n", Post.where(:title => 'title').to_csv(:fields => [:title, :body])
+    assert_equal "Title,Body\ntitle,foobar\n", Post.where(:title => 'title').to_csv(:fields => [:title, :body])
   end
 end

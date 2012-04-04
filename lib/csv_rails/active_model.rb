@@ -12,7 +12,7 @@ module CsvRails
             human_attribute_name(f)
           end
         }
-        all.to_csv(opts.update(:fields => fields, :header => header))
+        all.to_a.to_csv(opts.update(:fields => fields, :header => header))
       end
 
       def csv_fields
