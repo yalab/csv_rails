@@ -12,18 +12,24 @@ module CsvRails
     # * <tt>:encoding</tt> - encoding
     # * <tt>:i18n_scope</tt> - i18n scope
     def to_csv(opts={})
-      fields = opts[:fields]
+      klass = first.class
+      fields = if opts[:fields]
+                 opts.delete(:fields)
+               elsif klass.respond_to?(:csv_fields)
+                 klass.csv_fields
+               else
+                 []
+               end
+
       header = if opts[:header]
                  opts.delete(:header)
-               elsif (klass = first.class).respond_to?(:csv_fields)
-                 klass.csv_fields
                else
                  scopes = ['csv_rails']
                  scopes << opts[:i18n_scope] if opts[:i18n_scope]
                  fields.map{|f|
                    defaults = scopes.map{|s| "#{s}.#{f}".to_sym }.push(f.to_s)
                    I18n.t(defaults.shift, :default => defaults)
-                 } if fields
+                 }
                end
       csv = CSV.generate do |_csv|
         _csv << header if header && !opts[:without_header]

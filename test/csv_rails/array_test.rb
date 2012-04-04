@@ -41,7 +41,7 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
   end
 
   test ".to_csv using empty array" do
-    assert_equal "", [].to_csv
+    assert_equal "\n", [].to_csv
   end
 
   test ".to_csv only it includes Mongoid instance" do
