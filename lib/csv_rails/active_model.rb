@@ -4,15 +4,18 @@ module CsvRails
     module ClassMethods
       def to_csv(opts={})
         fields = opts[:fields] || csv_fields
-        scope = opts.delete(:i18n_scope)
-        header = fields.map{|f|
+        header = csv_header(fields, opts.delete(:i18n_scope))
+        all.to_a.to_csv(opts.update(:fields => fields, :header => header))
+      end
+
+      def csv_header(fields, scope=nil)
+        fields.map{|f|
           if scope
             I18n.t("#{scope}.#{f}", :default => human_attribute_name(f))
           else
             human_attribute_name(f)
           end
         }
-        all.to_a.to_csv(opts.update(:fields => fields, :header => header))
       end
 
       def csv_fields
