@@ -4,8 +4,8 @@ require 'csv_rails/active_model'
 Array.send(:include, CsvRails::Array)
 
 if defined?(ActiveRecord)
-  ActiveRecord::Base.send(:include, CsvRails::ActiveModel)
-  ActiveRecord::Relation.send(:include, CsvRails::ActiveModel::ClassMethods)
+  require 'csv_rails/active_record'
+  ActiveRecord::Base.send(:include, CsvRails::ActiveRecord)
 end
 
 if defined?(Mongoid)
