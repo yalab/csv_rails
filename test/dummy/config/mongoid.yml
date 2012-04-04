@@ -1,0 +1,7 @@
+development: &dev
+  host: localhost
+  database: csv_rails
+
+test:
+  <<: *dev
+

@@ -8,6 +8,10 @@ if defined?(ActiveRecord)
   ActiveRecord::Relation.send(:include, CsvRails::ActiveModel::ClassMethods)
 end
 
+if defined?(Mongoid)
+
+end
+
 ActionController::Renderers.add :csv do |obj, options|
   filename = options[:filename] || File.basename(request.path)
   send_data obj.to_csv(options), :type => Mime::CSV,
