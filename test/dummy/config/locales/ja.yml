@@ -18,3 +18,8 @@ ja:
       user/groups:
         first:
           <<: *groupmodel
+  mongoid:
+    attributes:
+      post:
+        title: タイトル
+        body: 本文
