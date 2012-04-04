@@ -9,7 +9,8 @@ if defined?(ActiveRecord)
 end
 
 if defined?(Mongoid)
-
+  require 'csv_rails/mongoid'
+  Mongoid::Document.send(:include, CsvRails::Mongoid)
 end
 
 ActionController::Renderers.add :csv do |obj, options|
