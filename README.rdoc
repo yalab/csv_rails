@@ -2,6 +2,11 @@
 
 CsvRails provides a simple way of download csv in Rails 3.
 
+== Supported versions
+Ruby 1.9 (1.8 not supported)
+Rails 3
+ActiveRecord or Mongoid
+
 == Install
 
 To use CsvRails simply add the line
