@@ -19,12 +19,10 @@ module CsvRails
       end
 
       def csv_fields
-        if respond_to?(:attribute_names)
-          attribute_names
-        elsif self.is_a?(::ActiveRecord::Relation)
-          @klass.new.attribute_names
+        if self.is_a?(::ActiveRecord::Relation)
+          @klass.attribute_names
         else
-          new.attribute_names
+          attribute_names
         end
       end
     end
