@@ -6,7 +6,7 @@ module CsvRails
     end
 
     def attribute_names
-      fields.keys.reject{|k| k == '_type' }.map(&:to_sym)
+      fields.keys.map(&:to_sym)
     end
   end
 end
