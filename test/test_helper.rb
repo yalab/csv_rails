@@ -1,3 +1,16 @@
+gemfile = File.expand_path('../../Gemfile', __FILE__)
+if File.exist?(gemfile)
+  ENV['BUNDLE_GEMFILE'] = gemfile
+  require 'bundler'
+  Bundler.setup
+end
+
+require 'simplecov'
+SimpleCov.start do
+  add_filter "/test/"
+  add_filter "/.bundle/"
+end
+
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
