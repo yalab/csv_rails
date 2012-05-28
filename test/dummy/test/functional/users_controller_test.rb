@@ -8,14 +8,19 @@ class UsersControllerTest < ActionController::TestCase
     @fields = [:id, :name, :age, :"groups.first.name"]
   end
 
-  test "should get index" do
+  test "should get index with csv format" do
     get :index, :format => 'csv'
     assert_equal User.all.to_csv(fields: @fields, without_header: true), response.body
   end
 
-  test "should get sjis" do
+  test "should get sjis with csv format" do
     get :sjis, :format => 'csv'
     assert_equal User.all.to_csv(fields: @fields).encode('SJIS'), response.body
+  end
+
+  test "should get index with tsv format" do
+    get :index, :format => 'tsv'
+    assert_equal User.all.to_tsv(fields: @fields, without_header: true), response.body
   end
 
   teardown do

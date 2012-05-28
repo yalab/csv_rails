@@ -4,6 +4,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { render csv: @users, fields: [:id, :name, :age, :"groups.first.name"], without_header: true }
+      format.tsv { render tsv: @users, fields: [:id, :name, :age, :"groups.first.name"], without_header: true }
     end
   end
 

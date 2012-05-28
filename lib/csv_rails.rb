@@ -13,8 +13,13 @@ if defined?(Mongoid)
   Mongoid::Document.send(:include, CsvRails::Mongoid)
 end
 
-ActionController::Renderers.add :csv do |obj, options|
-  filename = options[:filename] || File.basename(request.path)
-  send_data obj.to_csv(options), :type => Mime::CSV,
-  :disposition => "attachment; filename=#{filename}.csv"
+Mime::Type.register "text/tsv", :tsv
+
+[:csv, :tsv].each do |format|
+  ActionController::Renderers.add format do |obj, options|
+    filename = options[:filename] || File.basename(request.path)
+    send_data obj.send("to_#{format}", options), :type => Mime.const_get(format.to_s.upcase),
+    :disposition => "attachment; filename=#{filename}.#{format}"
+  end
 end
+
