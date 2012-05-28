@@ -48,7 +48,7 @@ module CsvRails
     end
 
     def to_tsv(opts={})
-      "sum\tmax"
+      separated_values("\t", opts)
     end
   end
 end
