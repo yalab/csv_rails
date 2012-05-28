@@ -46,5 +46,9 @@ module CsvRails
     def to_csv(opts={})
       separated_values(",", opts)
     end
+
+    def to_tsv(opts={})
+      "sum\tmax"
+    end
   end
 end

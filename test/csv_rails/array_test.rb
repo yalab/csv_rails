@@ -29,6 +29,12 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
     assert_equal fields.join(','), [].to_csv(:fields => fields).chomp
   end
 
+  test ".to_tsv not stored i18n" do
+    fields = [:sum, :max]
+    assert_equal fields.join("\t"), [].to_tsv(:fields => fields).chomp
+  end
+
+
   test ".to_csv accept encoding" do
     name = "名前"
     assert_equal name.encode('SJIS'), [].to_csv(:header => [name], :encoding => 'SJIS').chomp
