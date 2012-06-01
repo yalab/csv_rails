@@ -93,4 +93,8 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
   test ".to_csv with association using as_csv" do
     assert_equal @group.created_at_as_csv, User.includes(:groups).to_csv(:fields => [:"groups.first.created_at"], :without_header => true).chomp
   end
+
+  test ".to_csv with row_sep option" do
+    assert_match /\r\n/, User.all.to_csv(:row_sep => "\r\n")
+  end
 end

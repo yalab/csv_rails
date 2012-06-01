@@ -13,6 +13,7 @@ module CsvRails
     # * <tt>:i18n_scope</tt> - i18n scope
 
     def separated_values(sep, opts)
+      row_sep = opts.delete(:row_sep) || :auto
       klass = first.class
       fields = if opts[:fields]
                  opts.delete(:fields)
@@ -34,7 +35,7 @@ module CsvRails
                    I18n.t(defaults.shift, :default => defaults)
                  }
                end
-      csv = CSV.generate(:col_sep => sep) do |_csv|
+      csv = CSV.generate(:col_sep => sep, :row_sep => row_sep) do |_csv|
         _csv << header if header && !opts[:without_header]
         each do |element|
           _csv << element.to_csv_ary(fields, opts)
