@@ -91,6 +91,17 @@ If you do not use :header option, header is using :fields and I18n transfer.
       end
     end
 
+And you can use tsv. Both tsv and csv can accept row_sep option.
+
+    # app/controllers/user_controller.rb
+    def index
+      @users = User.all
+      respond_to do |format|
+        format.csv{ render csv: @users, :row_sep => "\r\n" }
+        format.tsv{ render tsv: @users, :row_sep => "\r\n" }
+      end
+    end
+
 You also use i18n_scope option
     # config/locales/ja.yml
     ja:
