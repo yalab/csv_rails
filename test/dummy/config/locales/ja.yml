@@ -13,10 +13,13 @@ ja:
         groups:
           first:
             <<: *groupmodel
-      # rails 3.2.3 or higher
+      # rails 3.2.3 - 3.2.5
       user/groups:
         first:
           <<: *groupmodel
+      # rails 3.2.6 or higher
+      groups/first:
+        <<: *groupmodel
   mongoid:
     attributes:
       post:

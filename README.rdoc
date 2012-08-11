@@ -77,11 +77,13 @@ If you do not use :header option, header is using :fields and I18n transfer.
             groups:
               first:
                 <<: *groupmodel
-          # edge rails
+          # rails 3.2.3 - 3.2.5
           user/groups:
             first:
               <<: *groupmodel
-
+          # rails 3.2.6 or higher
+          groups/first:
+            <<: *groupmodel
 
     # app/controllers/user_controller.rb
     def index
