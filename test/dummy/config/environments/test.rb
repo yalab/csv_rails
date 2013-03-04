@@ -31,4 +31,10 @@ Dummy::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  config.after_initialize do
+    if ActiveRecord::Base.connection.instance_variable_get(:@config)[:database] ==  ':memory:'
+      puts "creating sqlite in memory database"
+      load "#{Rails.root}/db/schema.rb"
+    end
+  end
 end
