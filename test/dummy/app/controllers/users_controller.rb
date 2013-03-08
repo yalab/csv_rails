@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def sjis
-    @users = User.includes(:groups).all
+    @users = User.includes(:groups).to_a
     respond_to do |format|
       format.html
       format.csv { render csv: @users, fields: [:id, :name, :age, :"groups.first.name"], encoding: 'SJIS' }
