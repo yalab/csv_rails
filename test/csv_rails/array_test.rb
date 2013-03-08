@@ -53,12 +53,12 @@ class CsvRails::ArrayTest < ActiveSupport::TestCase
   test ".to_csv only it includes Mongoid instance" do
     post = Post.create(:title => 'this is csv_rails', :body => "line\nline\nline\n")
 
-    assert_equal " type,\"\",タイトル,本文\n#{post._type},#{post._id},#{post.title},\"#{post.body}\"\n", [post].to_csv
+    assert_equal "\"\",タイトル,本文\n#{post._id},#{post.title},\"#{post.body}\"\n", [post].to_csv
   end
 
   test ".to_tsv only it includes Mongoid instance" do
     post = Post.create(:title => 'this is csv_rails', :body => "line\nline\nline\n")
 
-    assert_equal " type\t\"\"\tタイトル\t本文\n#{post._type}\t#{post._id}\t#{post.title}\t\"#{post.body}\"\n", [post].to_tsv
+    assert_equal "\"\"\tタイトル\t本文\n#{post._id}\t#{post.title}\t\"#{post.body}\"\n", [post].to_tsv
   end
 end
