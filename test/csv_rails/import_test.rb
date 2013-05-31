@@ -54,4 +54,11 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
     User.csv_import(csv.gsub(/^\s*/, ''))
     assert_equal 1, User.count
   end
+
+  test "import skip if block returns false" do
+    User.csv_import(@csv) do |user|
+      next false if user.id == 2
+    end
+    assert_nil User.find_by_id(2)
+  end
 end

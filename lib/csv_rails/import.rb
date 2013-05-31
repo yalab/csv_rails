@@ -16,7 +16,10 @@ module CsvRails::Import
                    self.new
                  end
         object.attributes = attributes
-        yield object, attributes if block_given?
+        if block_given?
+          val = yield object, attributes
+          next if val == false
+        end
         object.save!
         objects << object
       end
