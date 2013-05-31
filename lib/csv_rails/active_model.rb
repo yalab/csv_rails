@@ -5,7 +5,12 @@ module CsvRails
       def to_csv(opts={})
         fields = opts[:fields] || csv_fields
         header = csv_header(fields, opts.delete(:i18n_scope))
-        send(:all).to_a.to_csv(opts.update(:fields => fields, :header => header))
+        all = if self.respond_to?(:to_a)
+                to_a
+              else
+                send(:all).to_a
+              end
+        all.to_csv(opts.update(:fields => fields, :header => header))
       end
 
       def csv_header(fields, scope=nil)
