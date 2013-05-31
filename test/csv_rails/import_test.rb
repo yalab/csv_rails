@@ -6,12 +6,12 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
     I18n.locale = :en
     @users = [{id: 1, name: 'yoshida', age: 30, secret: 'password'},
               {id: 2, name: 'yalab',   age: 3,  secret: 'password'}]
-    csv = <<-EOS
+    csv = <<-EOS.gsub(/^\s+/, '')
       id,name,age,secret
       #{@users[0].values.join(',')}
       #{@users[1].values.join(',')}
     EOS
-    @csv = StringIO.new(csv.gsub(/^\s+/, ''))
+    @csv = StringIO.new(csv)
   end
 
   test "import IO" do
@@ -37,22 +37,22 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
 
   test "import with fields option" do
     user = {name: 'atsushi', age: 14}
-    csv = <<-EOS
+    csv = <<-EOS.gsub(/^\s*/, '')
       #{user.values.join(',')}
     EOS
-    users = User.csv_import(StringIO.new(csv.gsub(/^\s*/, '')), fields: user.keys)
+    users = User.csv_import(StringIO.new(csv), fields: user.keys)
     user.each do |k, v|
       assert_equal v, users.first[k]
     end
   end
 
   test "import skip blank line" do
-    csv = <<-EOS
+    csv = <<-EOS.gsub(/^\s*/, '')
       name,age
 
       yoshida,30
     EOS
-    User.csv_import(csv.gsub(/^\s*/, ''))
+    User.csv_import(csv)
     assert_equal 1, User.count
   end
 
@@ -74,12 +74,12 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
     User.module_eval do
       validates :name, presence: true
     end
-    csv =<<-EOS
+    csv =<<-EOS.gsub(/^\s*/, '')
       name,age
       ,30
       yoshida,12
     EOS
-    users = User.csv_import(csv.gsub(/^\s*/, ''))
+    users = User.csv_import(csv)
     assert_equal 0, User.count
     assert_equal ["Name can't be blank"], users[0].errors.full_messages
   end
