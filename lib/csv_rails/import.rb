@@ -4,6 +4,7 @@ module CsvRails::Import
     def csv_import(body, opts={})
       fields = opts[:fields]
       records = []
+      all_green = true
       self.transaction do
         CSV.parse(body).each.with_index do |row, i|
           unless fields
@@ -21,9 +22,14 @@ module CsvRails::Import
             val = yield record, attributes, i
             next if val == false
           end
-          record.save!
+          if all_green && record.valid?
+            record.save!
+          else
+            all_green = false
+          end
           records << record
         end
+        raise ActiveRecord::Rollback unless all_green
       end
       records
     end

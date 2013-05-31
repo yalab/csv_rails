@@ -3,6 +3,7 @@ require 'test_helper'
 
 class CsvRails::ImportTest < ActiveSupport::TestCase
   setup do
+    I18n.locale = :en
     @users = [{id: 1, name: 'yoshida', age: 30, secret: 'password'},
               {id: 2, name: 'yalab',   age: 3,  secret: 'password'}]
     csv = <<-EOS
@@ -67,5 +68,19 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
       raise ActiveRecord::Rollback if index == 2
     end
     assert_nil User.find_by_id(1)
+  end
+
+  test "includes invalid attributes" do
+    User.module_eval do
+      validates :name, presence: true
+    end
+    csv =<<-EOS
+      name,age
+      ,30
+      yoshida,12
+    EOS
+    users = User.csv_import(csv.gsub(/^\s*/, ''))
+    assert_equal 0, User.count
+    assert_equal ["Name can't be blank"], users[0].errors.full_messages
   end
 end
