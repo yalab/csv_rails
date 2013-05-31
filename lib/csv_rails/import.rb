@@ -2,11 +2,11 @@ module CsvRails::Import
   extend ActiveSupport::Concern
   module ClassMethods
     def csv_import(body, opts={})
-      fields = opts[:fields]
+      fields = opts.delete(:fields)
       records = []
       all_green = true
       self.transaction do
-        CSV.parse(body).each.with_index do |row, i|
+        CSV.parse(body, opts).each.with_index do |row, i|
           unless fields
             fields = row
             next
@@ -32,6 +32,10 @@ module CsvRails::Import
         raise ActiveRecord::Rollback unless all_green
       end
       records
+    end
+
+    def tsv_import(body, opts={}, &block)
+      csv_import(body, opts.merge(col_sep: "\t"), &block)
     end
   end
 end

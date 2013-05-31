@@ -95,4 +95,20 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "it also use tsv_import" do
+    secret = 'hogehoge'
+    User.tsv_import(@csv.read.gsub(/,/, "\t")) do |user, params, ix|
+      user.secret = secret if user.name == 'yalab'
+    end
+    @users.each do |params|
+      user = User.find_by_id(params[:id])
+      params.each do |k, v|
+        if k == :secret && user.name == 'yalab'
+          v = secret
+        end
+        assert_equal v, user[k]
+      end
+    end
+  end
 end
