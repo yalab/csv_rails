@@ -61,4 +61,11 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
     end
     assert_nil User.find_by_id(2)
   end
+
+  test "import is transaction" do
+    User.csv_import(@csv) do |user, attributes, index|
+      raise ActiveRecord::Rollback if index == 2
+    end
+    assert_nil User.find_by_id(1)
+  end
 end
