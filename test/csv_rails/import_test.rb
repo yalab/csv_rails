@@ -2,21 +2,24 @@
 require 'test_helper'
 
 class CsvRails::ImportTest < ActiveSupport::TestCase
-  test "import IO" do
+  setup do
+    @users = [{id: 1, name: 'yoshida', age: 30, secret: 'password'},
+              {id: 2, name: 'yalab',   age: 3,  secret: 'password'}]
     csv = <<-EOS
       id,name,age,secret
-      1,yoshida,30,password
-      2,yalab,3,password
+      #{@users[0].values.join(',')}
+      #{@users[1].values.join(',')}
     EOS
-    User.csv_import(StringIO.new(csv.gsub(/^\s+/, '')))
-    yoshida = User.find(1)
-    assert_equal 'yoshida',  yoshida.name
-    assert_equal 30,         yoshida.age
-    assert_equal 'password', yoshida.secret
+    @csv = StringIO.new(csv.gsub(/^\s+/, ''))
+  end
 
-    yalab = User.find(2)
-    assert_equal 'yalab',    yalab.name
-    assert_equal 3,          yalab.age
-    assert_equal 'password', yalab.secret    
+  test "import IO" do
+    User.csv_import(@csv)
+    @users.each do |params|
+      user = User.find(params[:id])
+      params.each do |k, v|
+        assert_equal v, user[k]
+      end
+    end
   end
 end
