@@ -44,4 +44,14 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
       assert_equal v, users.first[k]
     end
   end
+
+  test "import skip blank line" do
+    csv = <<-EOS
+      name,age
+
+      yoshida,30
+    EOS
+    User.csv_import(csv.gsub(/^\s*/, ''))
+    assert_equal 1, User.count
+  end
 end
