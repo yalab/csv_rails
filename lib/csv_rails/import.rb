@@ -2,7 +2,8 @@ module CsvRails::Import
   extend ActiveSupport::Concern
   module ClassMethods
     def csv_import(body, opts={})
-      fields = nil
+      fields = opts[:fields]
+      objects = []
       CSV.parse(body).each do |row|
         unless fields
           fields = row
@@ -17,7 +18,9 @@ module CsvRails::Import
         object.attributes = attributes
         yield object, attributes if block_given?
         object.save!
+        objects << object
       end
+      objects
     end
   end
 end

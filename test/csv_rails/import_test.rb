@@ -33,4 +33,15 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
     user = User.find(1)
     assert_equal name, user.name
   end
+
+  test "import with fields option" do
+    user = {name: 'atsushi', age: 14}
+    csv = <<-EOS
+      #{user.values.join(',')}
+    EOS
+    users = User.csv_import(StringIO.new(csv.gsub(/^\s*/, '')), fields: user.keys)
+    user.each do |k, v|
+      assert_equal v, users.first[k]
+    end
+  end
 end
