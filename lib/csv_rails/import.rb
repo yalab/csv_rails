@@ -34,6 +34,7 @@ module CsvRails::Import
 
     def csv_import(body, opts={})
       fields = opts.delete(:fields)
+      find_key = opts.has_key?(:find_key) ? opts.delete(:find_key) : :id
       records = []
       all_green = true
       translated = false
@@ -48,8 +49,8 @@ module CsvRails::Import
             translated = true
           end
           attributes = ActiveSupport::HashWithIndifferentAccess.new(Hash[fields.zip(row)])
-          record = if id = attributes['id']
-                     self.where(id: id).first_or_initialize
+          record = if find_key
+                     self.where(:"#{find_key}" => attributes[find_key.to_s]).first_or_initialize
                    else
                      self.new
                    end

@@ -123,4 +123,15 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
     User.csv_import(User.to_csv.gsub('foobar', 'hogehoge'))
     assert_equal 'hogehoge', user.reload.name
   end
+
+  test "import can choose key" do
+    csv =<<-EOS.gsub(/^\s*/, '')
+      name,age,group_name
+      yoshida,12,human
+      yoshida,15,human
+    EOS
+    User.csv_import(csv, find_key: :name)
+    assert_equal 1, User.count
+    assert_equal 15, User.find(1).age
+  end
 end
