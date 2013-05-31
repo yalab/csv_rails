@@ -22,4 +22,15 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "import with block" do
+    name = 'test'
+    User.csv_import(@csv) do |user, params|
+      if params[:id] == '1'
+        user.name = name
+      end
+    end
+    user = User.find(1)
+    assert_equal name, user.name
+  end
 end

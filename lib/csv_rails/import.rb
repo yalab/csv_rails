@@ -8,13 +8,14 @@ module CsvRails::Import
           fields = row
           next
         end
-        attributes = Hash[fields.zip(row)]
+        attributes = ActiveSupport::HashWithIndifferentAccess.new(Hash[fields.zip(row)])
         object = if id = attributes['id']
-                   self.where(id: id).first_or_create
+                   self.where(id: id).first_or_initialize
                  else
                    self.new
                  end
         object.attributes = attributes
+        yield object, attributes if block_given?
         object.save!
       end
     end
