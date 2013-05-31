@@ -83,4 +83,16 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
     assert_equal 0, User.count
     assert_equal ["Name can't be blank"], users[0].errors.full_messages
   end
+
+  test "import can accept not a column" do
+    csv =<<-EOS.gsub(/^\s*/, '')
+      name,age,group_name
+      yoshida,12,human
+    EOS
+    assert_difference("User.count") do
+      User.csv_import(csv) do |user, attributes|
+        assert_equal 'human', attributes[:group_name]
+      end
+    end
+  end
 end

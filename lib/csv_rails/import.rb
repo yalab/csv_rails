@@ -17,7 +17,7 @@ module CsvRails::Import
                    else
                      self.new
                    end
-          record.attributes = attributes
+          record.attributes = attributes.select{|k, v| self.attribute_method?(k) }
           if block_given?
             val = yield record, attributes, i
             next if val == false
