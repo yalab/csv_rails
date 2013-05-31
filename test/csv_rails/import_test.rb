@@ -111,4 +111,16 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "inverse_human_attriute_name" do
+    I18n.locale = :ja
+    assert_equal :name, User.inverse_human_attriute_name("名前")
+  end
+
+  test "csv download upload" do
+    I18n.locale = :ja
+    user = User.create(name: 'foobar', age: 20)
+    User.csv_import(User.to_csv.gsub('foobar', 'hogehoge'))
+    assert_equal 'hogehoge', user.reload.name
+  end
 end
