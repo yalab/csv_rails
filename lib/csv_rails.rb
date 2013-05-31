@@ -1,5 +1,6 @@
 require 'csv_rails/array'
 require 'csv_rails/active_model'
+require 'csv_rails/import'
 
 Array.send(:include, CsvRails::Array)
 
