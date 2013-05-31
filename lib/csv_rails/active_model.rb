@@ -5,12 +5,7 @@ module CsvRails
       def to_csv(opts={})
         fields = opts[:fields] || csv_fields
         header = csv_header(fields, opts.delete(:i18n_scope))
-        eagerload = if self.is_a?(::ActiveRecord::Relation)
-                      :load                      
-                    else
-                      :all
-                    end
-        send(eagerload).to_a.to_csv(opts.update(:fields => fields, :header => header))
+        send(:all).to_a.to_csv(opts.update(:fields => fields, :header => header))
       end
 
       def csv_header(fields, scope=nil)

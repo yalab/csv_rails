@@ -2,6 +2,7 @@
 require 'test_helper'
 class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
   setup do
+    I18n.locale = :en
     @user = User.create(:name => 'yalab', :age => '29', :secret => 'password')
     @group = Group.create(:name => 'ruby')
     @user.groups << @group
@@ -95,6 +96,6 @@ class CsvRails::ActiveRecordTest < ActiveSupport::TestCase
   end
 
   test ".to_csv with row_sep option" do
-    assert_match /\r\n/, User.all.load.to_a.to_csv(:row_sep => "\r\n")
+    assert_match /\r\n/, User.all.to_a.to_csv(:row_sep => "\r\n")
   end
 end
