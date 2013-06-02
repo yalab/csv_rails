@@ -1,4 +1,5 @@
 Dummy::Application.routes.draw do
+  resources :groups, only: [:create]
   resources :users, :only => [:index] do
     get :sjis, :on => :collection
   end
