@@ -71,9 +71,6 @@ class CsvRails::ImportTest < ActiveSupport::TestCase
   end
 
   test "includes invalid attributes" do
-    User.module_eval do
-      validates :name, presence: true
-    end
     csv =<<-EOS.gsub(/^\s*/, '')
       name,age
       ,30
