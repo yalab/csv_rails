@@ -80,7 +80,7 @@ GIT
 PATH
   remote: .
   specs:
-    csv_rails (0.6.1)
+    csv_rails (0.7.0)
       rails (>= 3.0.0)
 
 GEM
