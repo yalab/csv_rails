@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   def create
     user_prefix = /^user_/
-    Group.csv_import(params[:group][:file], find_key: :name) do |group, _params, i|
+    @groups = Group.csv_import(params[:group][:file], find_key: :name) do |group, _params, i|
       user_params = _params.select{|k, v| k =~ user_prefix }.to_a.inject({}){|hash, (k, v)|
         hash[k.gsub(user_prefix, '')] = v
         hash

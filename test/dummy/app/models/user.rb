@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :memberships
   has_many :groups, through: :memberships
+  validates :name, presence: :true
   include CsvRails::Import
 
   def updated_at_as_csv
